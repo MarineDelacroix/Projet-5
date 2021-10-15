@@ -35,12 +35,50 @@ fetch(newUrl)
         title.innerHTML = `${data.name}`
         ;
         const price = document.getElementById("price")
-        price.innerText = `${data.price}`    
+        price.innerText = `${data.price}` 
         ;
         
         const description = document.getElementById("description")
         description.innerText = data.description
         ;
-        }
+        const colors = document.getElementById("colors")
+        colors.innerHTML += `
+        <option value="vert">${data.colors[0]}</option>
+        <option value="blanc">${data.colors[1]}</option>
+        <option value="blanc">${data.colors[2]}</option>
+        <option value="blanc">${data.colors[3]}</option>`
+        ;  
+
+        
+        
+
+
+        const button = document.getElementById("addToCart")
+        button.addEventListener("click", itemQuantity)
+        addToCart.innerElement+= `
+        <button onclick="${itemQuantity}"id="addToCart">Ajouter au panier</button>`;
+        
+        
+        function itemQuantity($0){
+            const quantityValue = document.getElementById("quantity")
+            quantity.innerElement+= `
+            <input type="number" name="itemQuantity" min="1" max="100" value="${$0.input}" id="quantity">`
+            var inputQty = document.getElementById("quantity").value;
+           }
+        
+           
+           let arr = [newId,inputQty,colors.value];
+           localStorage.setItem("order", JSON.stringify(arr));     
+
+        
     }
+    
+
+    
+}
     )
+    
+    
+
+    
+

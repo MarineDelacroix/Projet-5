@@ -23,7 +23,6 @@ fetch(url)
     //page d'accueil fonction pour l'affichage des produits//
     function addCards(data) {
         for (product of data) {
-            console.log(product)
             const items = document.getElementById("items")
             items.innerHTML += `   
             <a href="./product.html?id=${product._id}">
