@@ -9,12 +9,12 @@ const order = JSON.parse(localStorage.getItem("order")) || [];
         <section id="cart__items">
         <article class="cart__item" data-id="${order[0]}">
                 <div class="cart__item__img">
-                  <img src="" alt="Photographie d'un canapé">
+                  <img src="${order[4]}" alt="${order[5]}">
                 </div>
                 <div class="cart__item__content">
                   <div class="cart__item__content__titlePrice">
-                    <h2></h2>
-                    <p></p>
+                    <h2>${order[6]}</h2>
+                    <p>${order[3]}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -31,5 +31,16 @@ const order = JSON.parse(localStorage.getItem("order")) || [];
               ;       
    }
 cart();
-  
+
+
+
+
+
+
+
+
+
+
+        
+
 

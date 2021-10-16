@@ -31,28 +31,36 @@ fetch(newUrl)
         item__img[0].innerHTML += `
         <img src="${data.imageUrl}" alt="${data.altTxt}">
         `;
-        const title = document.getElementById("title")
-        title.innerHTML = `${data.name}`
-        ;
+        
+        
         const price = document.getElementById("price")
         price.innerText = `${data.price}` 
         ;
+        console.log(data.price)
         
         const description = document.getElementById("description")
         description.innerText = data.description
         ;
         const colors = document.getElementById("colors")
+        ;   
         colors.innerHTML += `
-        <option value="vert">${data.colors[0]}</option>
-        <option value="blanc">${data.colors[1]}</option>
-        <option value="blanc">${data.colors[2]}</option>
-        <option value="blanc">${data.colors[3]}</option>`
-        ;  
-
+        <option value="${data.colors[0]}">${data.colors[0]}</option>
+        <option value="${data.colors[1]}">${data.colors[1]}</option>
+        `;
+        if ((data.colors).length === 3){
+        colors.innerHTML += `      
+        <option value="${data.colors[2]}">${data.colors[2]}</option>
+        `;
+        }
+        if ((data.colors).length === 4){
+        colors.innerHTML +=`
+        <option value="${data.colors[3]}">${data.colors[3]}</option>`;
+        }
         
+            
         
-
-
+          // utiliser les données ici  
+        }
         const button = document.getElementById("addToCart")
         button.addEventListener("click", itemQuantity)
         addToCart.innerElement+= `
@@ -64,21 +72,20 @@ fetch(newUrl)
             quantity.innerElement+= `
             <input type="number" name="itemQuantity" min="1" max="100" value="${$0.input}" id="quantity">`
             var inputQty = document.getElementById("quantity").value;
-           }
-        
            
-           let arr = [newId,inputQty,colors.value];
-           localStorage.setItem("order", JSON.stringify(arr));     
+            const title = document.getElementById("title")
+            title.innerHTML = `${data.name}`
+            ;
+           
+           let arr = [newId,inputQty,(data.colors).value,data.price,data.imageUrl,data.altTxt,data.name];
+           localStorage.setItem("order", JSON.stringify(arr));    
+
 
         
-    }
-    
-
-    
-}
-    )
-    
+        }
     
 
     
 
+
+    })
