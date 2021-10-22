@@ -32,12 +32,12 @@ fetch(newUrl)
         <img src="${data.imageUrl}" alt="${data.altTxt}">
         `;
         
-        
+        const title = document.getElementById("title")
+            title.innerHTML = `${data.name}`
+            ;
         const price = document.getElementById("price")
         price.innerText = `${data.price}` 
         ;
-        console.log(data.price)
-        
         const description = document.getElementById("description")
         description.innerText = data.description
         ;
@@ -59,33 +59,93 @@ fetch(newUrl)
         
             
         
-          // utiliser les données ici  
+          
         }
-        const button = document.getElementById("addToCart")
-        button.addEventListener("click", itemQuantity)
+        function button(){
+        const addToCart = document.getElementById("addToCart")
+        addToCart.addEventListener("click", itemQuantity)
         addToCart.innerElement+= `
-        <button onclick="${itemQuantity}"id="addToCart">Ajouter au panier</button>`;
-        
-        
+        <button onclick="${itemQuantity}"id="addToCart">Ajouter au panier</button>`;  
+    }
+    button();
+
         function itemQuantity($0){
             const quantityValue = document.getElementById("quantity")
-            quantity.innerElement+= `
-            <input type="number" name="itemQuantity" min="1" max="100" value="${$0.input}" id="quantity">`
+            quantityValue.innerElement+= `
+            <input type="number" name="itemQuantity" min="1" max="100" value="${$0.input}" id="quantity">`;
+        }
             var inputQty = document.getElementById("quantity").value;
-           
             const title = document.getElementById("title")
             title.innerHTML = `${data.name}`
             ;
+            var inputColor=document.getElementById("colors").option;
+            let names = [data.name];
+            localStorage.setItem("names", JSON.stringify(names));
+
+            let product = [newId,(data.colors),inputQty];
+            localStorage.setItem("product", JSON.stringify (product));
+            
+
+            let description = [data.description];
+            localStorage.setItem("description", JSON.stringify(description));
+            
+            let imageUrl = [data.imageUrl,data.altTxt];
+            localStorage.setItem("imageUrl", JSON.stringify(imageUrl));
+            let price = [data.price];
+
+            localStorage.setItem("price",JSON.stringify(price));
+           //let arr =[newId,data.name,data.altTxt,data.imageUrl,data.description,inputQty,data.price];
+           //localStorage.setItem("order", JSON.stringify(arr));   
            
-           let arr = [newId,inputQty,(data.colors).value,data.price,data.imageUrl,data.altTxt,data.name];
-           localStorage.setItem("order", JSON.stringify(arr));    
-
-
+          
+               
+           }
         
-        }
+        
+    
+        
+        //const addToCart = document.getElementById("addToCart");
+        //addToCart.addEventListener("click", (e) => {
+            //e.preventDefault();
+            
+            //const quantity = document.getElementById("quantity");
+
+            // créer un nouveau produit
+            //let objectProduct = new product(
+                //newId,
+                //product.name,
+                //product.description,
+                //product.price,
+                //product.quantity,
+                //product.imageUrl
+            //);
+            // vérifie s'il est déja présent
+            // si oui, dejaPresent en true et sauvegarde sa place dans le localStorage
+            //let isAlreadyPresent = false;
+            //let indexModification;
+            //for (new product of data) {
+                //switch (product.option) {
+                    //case objectProduct.option:
+                        //isAlreadyPresent = true;
+                        //indexModification = data.indexOf(product);
+                
+            //}
+
+            // si déjaPresent incrémente seulement la quantité
+            //if (isAlreadyPresent) {
+                //data[indexModification].quantity =
+                  //  +data[indexModification].quantity + +objectProduct.quantity;
+                //localStorage.setItem("order", JSON.stringify(data));
+                // si non, ajoute le produit au localStorage
+            //} else {
+              //  data.push(objectProduct);
+                //localStorage.setItem("order", JSON.stringify(data));
+            //}
+        //});
+    //});    
     
 
     
 
 
-    })
+    ) 

@@ -1,25 +1,27 @@
 
-        // fonction pour la création de la card de la page produit      
-const order = JSON.parse(localStorage.getItem("order")) || [];
-
 
    function cart(){   
-        const cart__items = document.getElementById("cart__items");
-        cart__items.innerHTML+=`
-        <section id="cart__items">
-        <article class="cart__item" data-id="${order[0]}">
+    const product = JSON.parse(localStorage.getItem("product"));
+    const names = JSON.parse(localStorage.getItem("names"));
+    const description = JSON.parse(localStorage.getItem("description"));
+    const imageUrl = JSON.parse(localStorage.getItem("imageUrl"));
+    const price = JSON.parse(localStorage.getItem("price"));
+    
+        const items = document.getElementById("cart__items");{
+        items.innerHTML+=`
+        <article class="cart__item" data-id="${product[0]}">
                 <div class="cart__item__img">
-                  <img src="${order[4]}" alt="${order[5]}">
+                  <img src="${imageUrl[0]}" alt="${imageUrl[1]}">
                 </div>
                 <div class="cart__item__content">
                   <div class="cart__item__content__titlePrice">
-                    <h2>${order[6]}</h2>
-                    <p>${order[3]}</p>
+                    <h2>${names[0]}</h2>
+                    <p>${description[0]}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
                       <p>Qté : </p>
-                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${order[1]}">
+                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${product[2]}">
                     </div>
                     <div class="cart__item__content__settings__delete">
                       <p class="deleteItem">Supprimer</p>
@@ -27,10 +29,21 @@ const order = JSON.parse(localStorage.getItem("order")) || [];
                   </div>
                 </div>
               </article>
-              </section>`
-              ;       
-   }
-cart();
+              `
+              ;
+            }           
+  }
+  cart();
+console.log(localStorage)
+
+
+
+
+
+
+
+
+
 
 
 
