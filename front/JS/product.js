@@ -1,6 +1,6 @@
 
 class product {
-    constructor(id,name,altTxt,imageUrl,description,colors,price) {
+    constructor(id,name,altTxt,imageUrl,description,colors,price,quantity) {
         this.id= id;
         this.name= name;
         this.altTxt= altTxt;
@@ -8,12 +8,14 @@ class product {
         this.description= description;
         this.colors= colors;
         this.price= price;
+        this.quantity= quantity;
     }
 }
 
 
 const searchParams = new URLSearchParams(location.search);
 const newId = searchParams.get("id") 
+const cartlocal = JSON.parse(localStorage.getItem("canape")) || [];
 
 //modification de l'adresse d'appel à l'API
 const newUrl = `http://localhost:3000/api/products/${newId}`;
@@ -23,6 +25,7 @@ fetch(newUrl)
     .then((data) => {
         page_url(data);
         // fonction pour la création de la card de la page produit
+        console.log("data",data);
         function page_url() {      
 
             // insertion des information de la card du produit
@@ -61,25 +64,30 @@ fetch(newUrl)
         
           
         }
-
         function button(){
-           
-                //const quantityValue = document.getElementById("quantity").input;
-                //quantityValue.innerElement+= `
-                //<input type="number" name="itemQuantity" min="1" max="100" value="${quantityValue}" id="quantity">`;
-            //}
-            
+        const addToCart = document.getElementById("addToCart")
+        addToCart.addEventListener("click", itemQuantity)
+        addToCart.innerElement+= `
+        <button onclick="${itemQuantity}"id="addToCart">Ajouter au panier</button>`;  
+    }
+    button();
 
-            const title = document.getElementById("title");
+        function itemQuantity($0){
+            const quantityValue = document.getElementById("quantity")
+            quantityValue.innerElement+= `
+            <input type="number" name="itemQuantity" min="1" max="100" value="${$0.input}" id="quantity">`;
+        }
+/*             var inputQty = document.getElementById("quantity").value;
+            const title = document.getElementById("title")
             title.innerHTML = `${data.name}`
             ;
-            var inputColor=document.getElementById("colors").inputMode;
-
+            var inputColor=document.getElementById("colors").option;
             let names = [data.name];
             localStorage.setItem("names", JSON.stringify(names));
 
-            let product = [newId,inputColor,];
+            let product = [newId,(data.colors),inputQty];
             localStorage.setItem("product", JSON.stringify (product));
+            
 
             let description = [data.description];
             localStorage.setItem("description", JSON.stringify(description));
@@ -90,62 +98,41 @@ fetch(newUrl)
 
             localStorage.setItem("price",JSON.stringify(price));
            //let arr =[newId,data.name,data.altTxt,data.imageUrl,data.description,inputQty,data.price];
-           //localStorage.setItem("order", JSON.stringify(arr)); 
-           const addToCart = document.getElementById("addToCart");  
-           addToCart.addEventListener("click", product);
-           addToCart.innerElement+= `
-           <button onclick="${product}"id="addToCart">Ajouter au panier</button>`;
-        }
-        button();  
+           //localStorage.setItem("order", JSON.stringify(arr));   
+           
           
-    }
+               
+           } */
+        
+           const btnAddBasket = document.getElementById("addToCart");
+           btnAddBasket.addEventListener("click", (e) => {
+               e.preventDefault();
+               const list = document.getElementById("colors");
+               const quantity = document.getElementById("quantity");
+   
+               // créer un nouveau produit
+               let objectProduct = new product(
+                   newId,
+                   data.name,
+                   data.altTxt,
+                   data.imageUrl,
+                   data.description,
+                    list.value,
+                    data.price,
+                    quantity.value
+               );
+
+               console.log("object",objectProduct);
+                cartlocal.push(objectProduct);
+                localStorage.setItem("canape", JSON.stringify(cartlocal));
+        
+           });
     
         
-        
-    
-        
-        //const addToCart = document.getElementById("addToCart");
-        //addToCart.addEventListener("click", (e) => {
-            //e.preventDefault();
-            
-            //const quantity = document.getElementById("quantity");
 
-            // créer un nouveau produit
-            //let objectProduct = new product(
-                //newId,
-                //product.name,
-                //product.description,
-                //product.price,
-                //product.quantity,
-                //product.imageUrl
-            //);
-            // vérifie s'il est déja présent
-            // si oui, dejaPresent en true et sauvegarde sa place dans le localStorage
-            //let isAlreadyPresent = false;
-            //let indexModification;
-            //for (new product of data) {
-                //switch (product.option) {
-                    //case objectProduct.option:
-                        //isAlreadyPresent = true;
-                        //indexModification = data.indexOf(product);
-                
-            //}
-
-            // si déjaPresent incrémente seulement la quantité
-            //if (isAlreadyPresent) {
-                //data[indexModification].quantity =
-                  //  +data[indexModification].quantity + +objectProduct.quantity;
-                //localStorage.setItem("order", JSON.stringify(data));
-                // si non, ajoute le produit au localStorage
-            //} else {
-              //  data.push(objectProduct);
-                //localStorage.setItem("order", JSON.stringify(data));
-            //}
-        //});
-    //});    
-    
+     
 
     
 
 
-    ) 
+});  

@@ -1,27 +1,65 @@
 
 
-   function cart(){   
-    const product = JSON.parse(localStorage.getItem("product"));
-    const names = JSON.parse(localStorage.getItem("names"));
-    const description = JSON.parse(localStorage.getItem("description"));
-    const imageUrl = JSON.parse(localStorage.getItem("imageUrl"));
-    const price = JSON.parse(localStorage.getItem("price"));
+   function cart(){ 
+         
+    const canape = JSON.parse(localStorage.getItem("canape"));
+    
     
         const items = document.getElementById("cart__items");{
         items.innerHTML+=`
-        <article class="cart__item" data-id="${product[0]}">
+        <article class="cart__item" data-id="${(canape[0]).newId}">
                 <div class="cart__item__img">
-                  <img src="${imageUrl[0]}" alt="${imageUrl[1]}">
+                  <img src="${(canape[0]).imageUrl}" alt="${(canape[0]).altTxt}">
                 </div>
                 <div class="cart__item__content">
                   <div class="cart__item__content__titlePrice">
-                    <h2>${names[0]}</h2>
-                    <p>${price[0]}</p>
+                    <h2>${(canape[0]).name}</h2>
+                    <p>${(canape[0]).price}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
                       <p>Qté : </p>
-                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${product[2]}">
+                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${(canape[0]).quantity}">
+                    </div>
+                    <div class="cart__item__content__settings__delete">
+                      <p class="deleteItem">Supprimer</p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+              <article class="cart__item" data-id="${(canape[1]).newId}">
+                <div class="cart__item__img">
+                  <img src="${(canape[1]).imageUrl}" alt="${(canape[1]).altTxt}">
+                </div>
+                <div class="cart__item__content">
+                  <div class="cart__item__content__titlePrice">
+                    <h2>${(canape[1]).name}</h2>
+                    <p>${(canape[1]).price}</p>
+                  </div>
+                  <div class="cart__item__content__settings">
+                    <div class="cart__item__content__settings__quantity">
+                      <p>Qté : </p>
+                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${(canape[1]).quantity}">
+                    </div>
+                    <div class="cart__item__content__settings__delete">
+                      <p class="deleteItem">Supprimer</p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+              <article class="cart__item" data-id="${(canape[2]).newId}">
+                <div class="cart__item__img">
+                  <img src="${(canape[2]).imageUrl}" alt="${(canape[2]).altTxt}">
+                </div>
+                <div class="cart__item__content">
+                  <div class="cart__item__content__titlePrice">
+                    <h2>${(canape[2]).name}</h2>
+                    <p>${(canape[2]).price}</p>
+                  </div>
+                  <div class="cart__item__content__settings">
+                    <div class="cart__item__content__settings__quantity">
+                      <p>Qté : </p>
+                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${(canape[2]).quantity}">
                     </div>
                     <div class="cart__item__content__settings__delete">
                       <p class="deleteItem">Supprimer</p>
@@ -32,7 +70,10 @@
               `
               ;
         }
-       
+        canape.push(items);
+        localStorage.setItem("items", JSON.stringify(canape));
+        
+        
       }
       cart();
 
@@ -49,13 +90,14 @@
                   let testFirstName = firstNameRegExp.test(inputFirstName.value)
                   let firstNameErrorMsg = inputFirstName.nextElementSibling;
                   if (testFirstName){
-                    firstNameErrorMsg.innerHTML='Prénom Valide';
+                    firstNameErrorMsg.innerHTML = "Prénom Valide";
+                    return false;
                   }
                   else{
-                    firstNameErrorMsg.innerHTML='Prénom Non Valide';
+                    firstNameErrorMsg.innerHTML = "Prénom non Valide";
+                    return true;
                   }
-                  let firstNameValue = inputFirstName.value;
-                  console.log(firstNameValue)
+                  
                 }
               //ecouter la modification de firstName
               form.lastName.addEventListener('change', function() {
@@ -70,9 +112,11 @@
                   let lastNameErrorMsg = inputLastName.nextElementSibling;
                   if (testLastName){
                     lastNameErrorMsg.innerHTML='Nom Valide';
+                    return true;
                   }
                   else{
                     lastNameErrorMsg.innerHTML='Nom Non Valide';
+                    return false;
                   }
                 }
               //ecouter la modification de l'adresse.
@@ -82,15 +126,17 @@
               const validAddress = function(inputAddress){
                 //creation regExp pour validation adresse
                 let adressRegExp = new RegExp(
-                  '^[A-Z][a-zA-Z]+$','g'
+                  '^(([a-zA-ZÀ-ÿ0-9]+[\s\-]{1}[a-zA-ZÀ-ÿ0-9]+)){1,10}$','g'
                   )
                   let testAddress = adressRegExp.test(inputAddress.value)
                   let addressErrorMsg = inputAddress.nextElementSibling;
                   if (testAddress){
                     addressErrorMsg.innerHTML='Adresse Valide';
+                    return true;
                   }
                   else{
                     addressErrorMsg.innerHTML='Adresse Non Valide';
+                    return false;
                   }
                 }
               //ecouter la modification de firstName
@@ -100,15 +146,17 @@
               const validCity = function(inputCity){
                 //creation regExp pour validation firstName
                 let cityRegExp = new RegExp(
-                  '^[A-Z][a-zA-Z]+$','g'
+                  '^(([a-zA-ZÀ-ÿ]+[\s\-]{1}[a-zA-ZÀ-ÿ]+)|([a-zA-ZÀ-ÿ]+)){1,10}$' ,'g'
                   )
                   let testCity = cityRegExp.test(inputCity.value)
                   let cityErrorMsg = inputCity.nextElementSibling;
                   if (testCity){
                     cityErrorMsg.innerHTML='Ville Valide';
+                    return true;
                   }
                   else{
                     cityErrorMsg.innerHTML='Ville Non Valide';
+                    return false;
                   }
                 }
               //ecouter la modification de firstName
@@ -118,18 +166,28 @@
               const validEmail = function(inputEmail){
                 //creation regExp pour validation firstName
                 let emailRegExp = new RegExp(
-                  '^[A-Z][a-zA-Z]+$','g'
+                  '^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$','g'
                   )
                   let testEmail = emailRegExp.test(inputEmail.value)
                   let emailErrorMsg = inputEmail.nextElementSibling;
                   if (testEmail){
                     emailErrorMsg.innerHTML='Email Valide';
+                    return true;
                   }
                   else{
                     emailErrorMsg.innerHTML='Email Non Valide';
+                    return false;
                   }
                 }
-                let contact = new Object ();
+                
+                      
+                //Créer objet contact 
+
+                //const order = document.getElementById('order');
+                //Créer objet contact
+                //définir l'action
+                //order.addEventListener('click',contact);
+                //order.innerElement += '<input type="submit" onclick="${contact}" action="" value="Commander !" id="order">'
                 
                       
   
@@ -158,4 +216,4 @@
 
 
        
-              
+                
