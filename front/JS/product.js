@@ -61,30 +61,25 @@ fetch(newUrl)
         
           
         }
-        function button(){
-        const addToCart = document.getElementById("addToCart")
-        addToCart.addEventListener("click", itemQuantity)
-        addToCart.innerElement+= `
-        <button onclick="${itemQuantity}"id="addToCart">Ajouter au panier</button>`;  
-    }
-    button();
 
-        function itemQuantity($0){
-            const quantityValue = document.getElementById("quantity")
-            quantityValue.innerElement+= `
-            <input type="number" name="itemQuantity" min="1" max="100" value="${$0.input}" id="quantity">`;
-        }
-            var inputQty = document.getElementById("quantity").value;
-            const title = document.getElementById("title")
+        function button(){
+           
+                //const quantityValue = document.getElementById("quantity").input;
+                //quantityValue.innerElement+= `
+                //<input type="number" name="itemQuantity" min="1" max="100" value="${quantityValue}" id="quantity">`;
+            //}
+            
+
+            const title = document.getElementById("title");
             title.innerHTML = `${data.name}`
             ;
-            var inputColor=document.getElementById("colors").option;
+            var inputColor=document.getElementById("colors").inputMode;
+
             let names = [data.name];
             localStorage.setItem("names", JSON.stringify(names));
 
-            let product = [newId,(data.colors),inputQty];
+            let product = [newId,inputColor,];
             localStorage.setItem("product", JSON.stringify (product));
-            
 
             let description = [data.description];
             localStorage.setItem("description", JSON.stringify(description));
@@ -95,11 +90,16 @@ fetch(newUrl)
 
             localStorage.setItem("price",JSON.stringify(price));
            //let arr =[newId,data.name,data.altTxt,data.imageUrl,data.description,inputQty,data.price];
-           //localStorage.setItem("order", JSON.stringify(arr));   
-           
+           //localStorage.setItem("order", JSON.stringify(arr)); 
+           const addToCart = document.getElementById("addToCart");  
+           addToCart.addEventListener("click", product);
+           addToCart.innerElement+= `
+           <button onclick="${product}"id="addToCart">Ajouter au panier</button>`;
+        }
+        button();  
           
-               
-           }
+    }
+    
         
         
     

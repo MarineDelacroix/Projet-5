@@ -16,7 +16,7 @@
                 <div class="cart__item__content">
                   <div class="cart__item__content__titlePrice">
                     <h2>${names[0]}</h2>
-                    <p>${description[0]}</p>
+                    <p>${price[0]}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -31,10 +31,113 @@
               </article>
               `
               ;
-            }           
-  }
-  cart();
-console.log(localStorage)
+        }
+       
+      }
+      cart();
+
+              let form = document.querySelector('#form');
+              //ecouter la modification de firstName
+              form.firstName.addEventListener('change', function() {
+                validFirstName(this)
+              });
+              const validFirstName = function(inputFirstName){
+                //creation regExp pour validation firstName
+                let firstNameRegExp = new RegExp(
+                  '^[A-Z][a-zA-Z]+$','g'
+                  )
+                  let testFirstName = firstNameRegExp.test(inputFirstName.value)
+                  let firstNameErrorMsg = inputFirstName.nextElementSibling;
+                  if (testFirstName){
+                    firstNameErrorMsg.innerHTML='Prénom Valide';
+                  }
+                  else{
+                    firstNameErrorMsg.innerHTML='Prénom Non Valide';
+                  }
+                  let firstNameValue = inputFirstName.value;
+                  console.log(firstNameValue)
+                }
+              //ecouter la modification de firstName
+              form.lastName.addEventListener('change', function() {
+                validLastName(this)
+              });
+              const validLastName = function(inputLastName){
+                //creation regExp pour validation lastName
+                let firstNameRegExp = new RegExp(
+                  '^[A-Z][a-zA-Z]+$','g'
+                  )
+                  let testLastName = firstNameRegExp.test(inputLastName.value)
+                  let lastNameErrorMsg = inputLastName.nextElementSibling;
+                  if (testLastName){
+                    lastNameErrorMsg.innerHTML='Nom Valide';
+                  }
+                  else{
+                    lastNameErrorMsg.innerHTML='Nom Non Valide';
+                  }
+                }
+              //ecouter la modification de l'adresse.
+              form.address.addEventListener('change', function() {
+                validAddress(this)
+              });
+              const validAddress = function(inputAddress){
+                //creation regExp pour validation adresse
+                let adressRegExp = new RegExp(
+                  '^[A-Z][a-zA-Z]+$','g'
+                  )
+                  let testAddress = adressRegExp.test(inputAddress.value)
+                  let addressErrorMsg = inputAddress.nextElementSibling;
+                  if (testAddress){
+                    addressErrorMsg.innerHTML='Adresse Valide';
+                  }
+                  else{
+                    addressErrorMsg.innerHTML='Adresse Non Valide';
+                  }
+                }
+              //ecouter la modification de firstName
+              form.city.addEventListener('change', function() {
+                validCity(this)
+              });
+              const validCity = function(inputCity){
+                //creation regExp pour validation firstName
+                let cityRegExp = new RegExp(
+                  '^[A-Z][a-zA-Z]+$','g'
+                  )
+                  let testCity = cityRegExp.test(inputCity.value)
+                  let cityErrorMsg = inputCity.nextElementSibling;
+                  if (testCity){
+                    cityErrorMsg.innerHTML='Ville Valide';
+                  }
+                  else{
+                    cityErrorMsg.innerHTML='Ville Non Valide';
+                  }
+                }
+              //ecouter la modification de firstName
+              form.email.addEventListener('change', function() {
+                validFirstName(this)
+              });
+              const validEmail = function(inputEmail){
+                //creation regExp pour validation firstName
+                let emailRegExp = new RegExp(
+                  '^[A-Z][a-zA-Z]+$','g'
+                  )
+                  let testEmail = emailRegExp.test(inputEmail.value)
+                  let emailErrorMsg = inputEmail.nextElementSibling;
+                  if (testEmail){
+                    emailErrorMsg.innerHTML='Email Valide';
+                  }
+                  else{
+                    emailErrorMsg.innerHTML='Email Non Valide';
+                  }
+                }
+                let contact = new Object ();
+                
+                      
+  
+
+
+              
+
+              
 
 
 
@@ -54,6 +157,5 @@ console.log(localStorage)
 
 
 
-        
-
-
+       
+              
