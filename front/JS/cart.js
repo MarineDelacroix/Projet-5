@@ -6,11 +6,9 @@
     const items = document.getElementById("cart__items");
     let structureProduitPanier = [];
     if(canape === null){
-      console.log("je suis vide");
-    }
-    else{
-      console.log("je ne suis pas vide");
-    
+      alert("je suis vide");
+    }else{
+      
       for(k = 0; k < canape.length; k++){
         structureProduitPanier = 
         structureProduitPanier + 
@@ -43,6 +41,23 @@
     
     console.log(canape)   
         } 
+
+        // fin de l'affichage des produits du panier
+        // gestion du bouton supprimer l'article 
+
+// selection des boutons supprimer
+
+let deleteItem = Array.from(document.querySelectorAll(".cart__item__content__settings__delete"));
+console.log(deleteItem)
+for (let l = 0; l < deleteItem; l++)[
+  deleteItem[l].addEventListener("click", () => {
+    
+    
+    
+    //avec la methode filter() selectionne les éléments à garder et supprime l'élément cliqué. 
+
+  })
+]
       
    
 
