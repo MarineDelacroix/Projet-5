@@ -1,20 +1,28 @@
 
 
-   function cart(){ 
-         
+   
+        
     const canape = JSON.parse(localStorage.getItem("canape"));
+    const items = document.getElementById("cart__items");
+    let structureProduitPanier = [];
+    if(canape === null){
+      console.log("je suis vide");
+    }
+    else{
+      console.log("je ne suis pas vide");
     
-    
-        const items = document.getElementById("cart__items");{
-        items.innerHTML+=`
-        <article class="cart__item" data-id="${(canape[0]).newId}">
+      for(k = 0; k < canape.length; k++){
+        structureProduitPanier = 
+        structureProduitPanier + 
+        `
+        <article class="cart__item" data-id="${(canape[k]).newId}">
                 <div class="cart__item__img">
-                  <img src="${(canape[0]).imageUrl}" alt="${(canape[0]).altTxt}">
+                  <img src="${(canape[k]).imageUrl}" alt="${(canape[k]).altTxt}">
                 </div>
                 <div class="cart__item__content">
                   <div class="cart__item__content__titlePrice">
-                    <h2>${(canape[0]).name}</h2>
-                    <p>${(canape[0]).price}</p>
+                    <h2>${(canape[k]).name}</h2>
+                    <p>${(canape[k]).price}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -27,55 +35,16 @@
                   </div>
                 </div>
               </article>
-              <article class="cart__item" data-id="${(canape[1]).newId}">
-                <div class="cart__item__img">
-                  <img src="${(canape[1]).imageUrl}" alt="${(canape[1]).altTxt}">
-                </div>
-                <div class="cart__item__content">
-                  <div class="cart__item__content__titlePrice">
-                    <h2>${(canape[1]).name}</h2>
-                    <p>${(canape[1]).price}</p>
-                  </div>
-                  <div class="cart__item__content__settings">
-                    <div class="cart__item__content__settings__quantity">
-                      <p>Qté : </p>
-                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${(canape[1]).quantity}">
-                    </div>
-                    <div class="cart__item__content__settings__delete">
-                      <p class="deleteItem">Supprimer</p>
-                    </div>
-                  </div>
-                </div>
-              </article>
-              <article class="cart__item" data-id="${(canape[2]).newId}">
-                <div class="cart__item__img">
-                  <img src="${(canape[2]).imageUrl}" alt="${(canape[2]).altTxt}">
-                </div>
-                <div class="cart__item__content">
-                  <div class="cart__item__content__titlePrice">
-                    <h2>${(canape[2]).name}</h2>
-                    <p>${(canape[2]).price}</p>
-                  </div>
-                  <div class="cart__item__content__settings">
-                    <div class="cart__item__content__settings__quantity">
-                      <p>Qté : </p>
-                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${(canape[2]).quantity}">
-                    </div>
-                    <div class="cart__item__content__settings__delete">
-                      <p class="deleteItem">Supprimer</p>
-                    </div>
-                  </div>
-                </div>
-              </article>
-              `
-              ;
-        }
-        canape.push(items);
-        localStorage.setItem("items", JSON.stringify(canape));
-        
-        
+        `;
       }
-      cart();
+        if (k == canape.length){
+        items.innerHTML = structureProduitPanier;      
+    }
+    
+    console.log(canape)   
+        } 
+      
+   
 
               let form = document.querySelector('#form');
               //ecouter la modification de firstName
@@ -216,4 +185,4 @@
 
 
        
-                
+              
