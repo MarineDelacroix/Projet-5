@@ -2,10 +2,10 @@
 
    
         
-    const canape = JSON.parse(localStorage.getItem("canape"));
+    let canape = JSON.parse(localStorage.getItem("canape"));
     const items = document.getElementById("cart__items");
     let structureProduitPanier = [];
-    if(canape === null){
+    if(canape === null || canape == 0){
       alert("je suis vide");
     }else{
       
@@ -25,10 +25,10 @@
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
                       <p>Qté : </p>
-                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${(canape[0]).quantity}">
+                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${(canape[k]).quantity}">
                     </div>
                     <div class="cart__item__content__settings__delete">
-                      <p class="deleteItem">Supprimer</p>
+                      <button class="deleteItem">Supprimer</p>
                     </div>
                   </div>
                 </div>
@@ -36,10 +36,12 @@
         `;
       }
         if (k == canape.length){
-        items.innerHTML = structureProduitPanier;      
+        items.innerHTML = `${structureProduitPanier}`;      
+    }else{
+      alert("null");
     }
     
-    console.log(canape)   
+       
         } 
 
         // fin de l'affichage des produits du panier
@@ -47,20 +49,34 @@
 
 // selection des boutons supprimer
 
-let deleteItem = Array.from(document.querySelectorAll(".cart__item__content__settings__delete"));
-console.log(deleteItem)
-for (let l = 0; l < deleteItem; l++)[
-  deleteItem[l].addEventListener("click", () => {
-    
-    
-    
-    //avec la methode filter() selectionne les éléments à garder et supprime l'élément cliqué. 
 
+let deleteItem = Array.from(document.querySelectorAll(".deleteItem"));
+
+for (let l = 0; l < deleteItem.length; l++)[
+  deleteItem[l].addEventListener("click", (event) => {
+    event.preventDefault();
+
+    //selection de l'id du produit qui va être supprimé en cliquant sur le bouton
+    console.log(event);
+    let idSelectionnerSuppression = canape[l].id;
+    
+
+    //avec la methode filter je selectionne les éléments à garder et je supprime 
+    //element ou le btn suppr a été cliqué. 
+    canape = canape.filter(product => product.id !== idSelectionnerSuppression);
+    //on envoie la variable dans le localStorage 
+    //
+    localStorage.setItem("canape",JSON.stringify(canape));
+    console.log(canape)
+    alert ("ce produit a été supprimé du panier");
+    // window.location.href= "cart.html";
+
+   
+    console.log(random(min, max))  
+    //avec la methode filter() selectionne les éléments à garder et supprime l'élément cliqué. 
   })
 ]
-      
    
-
               let form = document.querySelector('#form');
               //ecouter la modification de firstName
               form.firstName.addEventListener('change', function() {
@@ -71,16 +87,19 @@ for (let l = 0; l < deleteItem; l++)[
                 let firstNameRegExp = new RegExp(
                   '^[A-Z][a-zA-Z]+$','g'
                   )
-                  let testFirstName = firstNameRegExp.test(inputFirstName.value)
+                  let testFirstName = firstNameRegExp.test(inputFirstName.value);
                   let firstNameErrorMsg = inputFirstName.nextElementSibling;
-                  if (testFirstName){
+                  if (testFirstName === true){                    
                     firstNameErrorMsg.innerHTML = "Prénom Valide";
-                    return false;
+                    contact.push(inputFirstName.value);
+
+                    return true;
                   }
                   else{
                     firstNameErrorMsg.innerHTML = "Prénom non Valide";
-                    return true;
+                    
                   }
+                  
                   
                 }
               //ecouter la modification de firstName
@@ -89,18 +108,19 @@ for (let l = 0; l < deleteItem; l++)[
               });
               const validLastName = function(inputLastName){
                 //creation regExp pour validation lastName
-                let firstNameRegExp = new RegExp(
+                let lastNameRegExp = new RegExp(
                   '^[A-Z][a-zA-Z]+$','g'
                   )
-                  let testLastName = firstNameRegExp.test(inputLastName.value)
+                  let testLastName = lastNameRegExp.test(inputLastName.value);
                   let lastNameErrorMsg = inputLastName.nextElementSibling;
-                  if (testLastName){
-                    lastNameErrorMsg.innerHTML='Nom Valide';
+                  if (testLastName === true){
+                    lastNameErrorMsg.innerHTML='Nom Valide';  
+                    contact.push(inputLastName.value);
+                    
                     return true;
                   }
                   else{
-                    lastNameErrorMsg.innerHTML='Nom Non Valide';
-                    return false;
+                    lastNameErrorMsg.innerHTML='Nom Non Valide'; 
                   }
                 }
               //ecouter la modification de l'adresse.
@@ -109,18 +129,20 @@ for (let l = 0; l < deleteItem; l++)[
               });
               const validAddress = function(inputAddress){
                 //creation regExp pour validation adresse
-                let adressRegExp = new RegExp(
-                  '^(([a-zA-ZÀ-ÿ0-9]+[\s\-]{1}[a-zA-ZÀ-ÿ0-9]+)){1,10}$','g'
+                let addressRegExp = new RegExp(
+                  '^[A-Z][a-zA-Z]+$','g'
                   )
-                  let testAddress = adressRegExp.test(inputAddress.value)
+                  let testAddress = addressRegExp.test(inputAddress.value);
                   let addressErrorMsg = inputAddress.nextElementSibling;
                   if (testAddress){
                     addressErrorMsg.innerHTML='Adresse Valide';
+                    contact.push(inputAddress.value);
+                    
                     return true;
+                    
                   }
                   else{
-                    addressErrorMsg.innerHTML='Adresse Non Valide';
-                    return false;
+                    addressErrorMsg.innerHTML='Adresse Non Valide';  
                   }
                 }
               //ecouter la modification de firstName
@@ -130,39 +152,75 @@ for (let l = 0; l < deleteItem; l++)[
               const validCity = function(inputCity){
                 //creation regExp pour validation firstName
                 let cityRegExp = new RegExp(
-                  '^(([a-zA-ZÀ-ÿ]+[\s\-]{1}[a-zA-ZÀ-ÿ]+)|([a-zA-ZÀ-ÿ]+)){1,10}$' ,'g'
+                  '^[A-Z][a-zA-Z]+$','g'
                   )
-                  let testCity = cityRegExp.test(inputCity.value)
+                  let testCity = cityRegExp.test(inputCity.value);
                   let cityErrorMsg = inputCity.nextElementSibling;
                   if (testCity){
                     cityErrorMsg.innerHTML='Ville Valide';
+                    contact.push(inputCity.value);
+                    
                     return true;
                   }
                   else{
                     cityErrorMsg.innerHTML='Ville Non Valide';
-                    return false;
+                    
                   }
                 }
               //ecouter la modification de firstName
               form.email.addEventListener('change', function() {
-                validFirstName(this)
+                validEmail(this)
               });
               const validEmail = function(inputEmail){
                 //creation regExp pour validation firstName
                 let emailRegExp = new RegExp(
-                  '^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$','g'
+                  '^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$','g'
                   )
-                  let testEmail = emailRegExp.test(inputEmail.value)
+                  let testEmail = emailRegExp.test(inputEmail.value);
                   let emailErrorMsg = inputEmail.nextElementSibling;
-                  if (testEmail){
+                  if (testEmail === true){
                     emailErrorMsg.innerHTML='Email Valide';
+                    contact.push(inputEmail.value);
+                    
                     return true;
+                     
                   }
                   else{
                     emailErrorMsg.innerHTML='Email Non Valide';
-                    return false;
+                    
                   }
                 }
+                let contact = []
+                console.log(contact);
+
+                
+                  console.log(validFirstName);
+                let orderBtn = document.querySelector("#order");
+                orderBtn.addEventListener("click",(event) => { 
+                event.preventDefault();
+                
+               
+                if(contact) {
+                let orderId = "6543134344468467"; 
+                let order = [canape, contact, orderId];
+                localStorage.setItem("order",JSON.stringify(order));
+                window.location.href = "./confirmation.html"; 
+                }else{
+                  alert("Erreur dans le formulaire de contact");
+                }
+              })
+              
+            
+            
+              
+            //}
+                //     localStorage.setItem("canape",JSON.stringify(canape));
+                //     localStorage.setItem("orderId", "65431343444684674");
+                //     window.location.href = "./confirmation.html"
+                //   })
+                // }
+              
+                
                 
                       
                 //Créer objet contact 

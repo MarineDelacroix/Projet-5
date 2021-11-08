@@ -67,6 +67,7 @@ fetch(newUrl)
         function button(){
         const addToCart = document.getElementById("addToCart")
         addToCart.addEventListener("click", itemQuantity)
+        
         addToCart.innerElement+= `
         <button onclick="${itemQuantity}"id="addToCart">Ajouter au panier</button>`;  
     }
@@ -125,6 +126,7 @@ fetch(newUrl)
                console.log("object",objectProduct);
                 cartlocal.push(objectProduct);
                 localStorage.setItem("canape", JSON.stringify(cartlocal));
+                alert("Produit ajouté au panier");
         
            });
     
