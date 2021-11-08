@@ -5,9 +5,21 @@
     let canape = JSON.parse(localStorage.getItem("canape"));
     const items = document.getElementById("cart__items");
     let structureProduitPanier = [];
+
+    
+
+
+//**********************************************************************Si le panier est vide ****************************************************/    
     if(canape === null || canape == 0){
+      document.getElementById("form").style.display = "none";
+      const totalQty = document.getElementById("totalQuantity");
+      totalQty.innerHTML="0";
+      const totalPrice = document.getElementById("totalPrice");
+      totalPrice.innerHTML="0";
       alert("je suis vide");
-    }else{
+    }
+//********************************************************************Si le panier n'est pas vide************************************************/    
+    else{
       
       for(k = 0; k < canape.length; k++){
         structureProduitPanier = 
@@ -34,6 +46,11 @@
                 </div>
               </article>
         `;
+      
+        
+        
+        
+//****************************************************************Affichage de la liste des produits commandés *******************************************/
       }
         if (k == canape.length){
         items.innerHTML = `${structureProduitPanier}`;      
@@ -49,7 +66,7 @@
 
 // selection des boutons supprimer
 
-
+//***************************************************************** Gestion de la suppression des produits du panier ****************************************//
 let deleteItem = Array.from(document.querySelectorAll(".deleteItem"));
 
 for (let l = 0; l < deleteItem.length; l++)[
@@ -69,14 +86,54 @@ for (let l = 0; l < deleteItem.length; l++)[
     localStorage.setItem("canape",JSON.stringify(canape));
     console.log(canape)
     alert ("ce produit a été supprimé du panier");
-    // window.location.href= "cart.html";
-
-   
-    console.log(random(min, max))  
+     window.location.href= "cart.html";
+     // callback(elementCourant[, index[, tableauEntier]])
+    
+ 
     //avec la methode filter() selectionne les éléments à garder et supprime l'élément cliqué. 
   })
 ]
-   
+//******************************************************************** montant total du panier ************************************************************************//
+//Declaration de la variable pour y mettre les prix dans le panier. 
+let prixTotalCalcul = [];
+//aller chercher les prix dans le panier 
+
+for (let m = 0;m<canape.length; m++){
+  let prixTotPanier = canape[m].price;
+  //mettre les prix du panier dans la variable "prixTotPanier"
+  prixTotalCalcul.push(prixTotPanier);
+}
+//addition des prix qu'il y a dans le tableau de la variable "prixTotCalcul" avec la méthode .reduce.
+const reducer = (accumulator, currentValue) => accumulator + currentValue;
+const prixTotal = prixTotalCalcul.reduce(reducer,0);
+// le code html du prix total à afficher
+prixTot=document.getElementById("totalPrice");
+prixTot.innerHTML = `${prixTotal}`;
+//******************************************************************** quantité totale du panier ************************************************************************//
+// gestion total quantité produits commandés. 
+let qteTotaleCalcul = [];
+for (let n = 0;n<canape.length; n++){
+  let qteTotalePanier = (canape[n].quantity);
+  qteTotaleCalcul.push(qteTotalePanier);
+}
+//le code html de la quantité totale à afficher. 
+
+
+var total = qteTotaleCalcul.reduce((a, b)=> a + b,0);
+
+console.log(qteTotaleCalcul)
+qteTot = document.getElementById("totalQuantity");
+qteTot.innerHTML = `${total}`;
+
+
+
+
+
+//**************************************************Modification de la quantité dans le panier ****************************************/
+
+
+
+   //**************************************************************************forumulaire*******************************************************************//
               let form = document.querySelector('#form');
               //ecouter la modification de firstName
               form.firstName.addEventListener('change', function() {
@@ -92,15 +149,11 @@ for (let l = 0; l < deleteItem.length; l++)[
                   if (testFirstName === true){                    
                     firstNameErrorMsg.innerHTML = "Prénom Valide";
                     contact.push(inputFirstName.value);
-
                     return true;
                   }
                   else{
-                    firstNameErrorMsg.innerHTML = "Prénom non Valide";
-                    
-                  }
-                  
-                  
+                    firstNameErrorMsg.innerHTML = "Prénom non Valide";                   
+                  }                 
                 }
               //ecouter la modification de firstName
               form.lastName.addEventListener('change', function() {
@@ -115,8 +168,7 @@ for (let l = 0; l < deleteItem.length; l++)[
                   let lastNameErrorMsg = inputLastName.nextElementSibling;
                   if (testLastName === true){
                     lastNameErrorMsg.innerHTML='Nom Valide';  
-                    contact.push(inputLastName.value);
-                    
+                    contact.push(inputLastName.value);                    
                     return true;
                   }
                   else{
@@ -138,8 +190,7 @@ for (let l = 0; l < deleteItem.length; l++)[
                     addressErrorMsg.innerHTML='Adresse Valide';
                     contact.push(inputAddress.value);
                     
-                    return true;
-                    
+                    return true;                    
                   }
                   else{
                     addressErrorMsg.innerHTML='Adresse Non Valide';  
@@ -158,13 +209,11 @@ for (let l = 0; l < deleteItem.length; l++)[
                   let cityErrorMsg = inputCity.nextElementSibling;
                   if (testCity){
                     cityErrorMsg.innerHTML='Ville Valide';
-                    contact.push(inputCity.value);
-                    
+                    contact.push(inputCity.value);                    
                     return true;
                   }
                   else{
-                    cityErrorMsg.innerHTML='Ville Non Valide';
-                    
+                    cityErrorMsg.innerHTML='Ville Non Valide';                    
                   }
                 }
               //ecouter la modification de firstName
@@ -180,21 +229,16 @@ for (let l = 0; l < deleteItem.length; l++)[
                   let emailErrorMsg = inputEmail.nextElementSibling;
                   if (testEmail === true){
                     emailErrorMsg.innerHTML='Email Valide';
-                    contact.push(inputEmail.value);
-                    
-                    return true;
-                     
+                    contact.push(inputEmail.value);                    
+                    return true;                     
                   }
                   else{
-                    emailErrorMsg.innerHTML='Email Non Valide';
-                    
+                    emailErrorMsg.innerHTML='Email Non Valide';                    
                   }
                 }
+                //***********************************************************Creation de l'objet contact******************************************//
                 let contact = []
-                console.log(contact);
-
-                
-                  console.log(validFirstName);
+                console.log(contact);  
                 let orderBtn = document.querySelector("#order");
                 orderBtn.addEventListener("click",(event) => { 
                 event.preventDefault();
