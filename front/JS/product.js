@@ -120,13 +120,34 @@ fetch(newUrl)
                    data.description,
                     list.value,
                     data.price,
-                    quantity.value
+                    parseInt(quantity.value, 10)
                );
+               let isAlreadyPresent = false;
+            let indexModification;
+            for (products of cartlocal) {
+                 switch (products.id) {
+                     case objectProduct.id:
+                        isAlreadyPresent = true;
+                         indexModification = cartlocal.indexOf(products);
+                }
+                console.log(products)
+            }
 
-               console.log("object",objectProduct);
+            // si déjaPresent incrémente seulement la quantité
+            if (isAlreadyPresent) {
+                cartlocal[indexModification].quantity =
+                    +cartlocal[indexModification].quantity + +objectProduct.quantity;
+                localStorage.setItem("canape", JSON.stringify(cartlocal));
+                // si non, ajoute le produit au localStorage
+            } else {
                 cartlocal.push(objectProduct);
                 localStorage.setItem("canape", JSON.stringify(cartlocal));
-                alert("Produit ajouté au panier");
+            }
+
+            //    console.log("object",objectProduct);
+            //     cartlocal.push(objectProduct);
+            //     localStorage.setItem("canape", JSON.stringify(cartlocal));
+            //     alert("Produit ajouté au panier");
         
            });
     
