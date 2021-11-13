@@ -137,6 +137,7 @@ fetch(newUrl)
             if (isAlreadyPresent) {
                 cartlocal[indexModification].quantity =
                     +cartlocal[indexModification].quantity + +objectProduct.quantity;
+                    
                 localStorage.setItem("canape", JSON.stringify(cartlocal));
                 // si non, ajoute le produit au localStorage
             } else {

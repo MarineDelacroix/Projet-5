@@ -22,6 +22,10 @@
     else{
       
       for(k = 0; k < canape.length; k++){
+        
+          const totalLinePrice = (canape[k].quantity) * (canape[k].price);
+          
+       
         structureProduitPanier = 
         structureProduitPanier + 
         `
@@ -32,12 +36,12 @@
                 <div class="cart__item__content">
                   <div class="cart__item__content__titlePrice">
                     <h2>${(canape[k]).name}</h2>
-                    <p>${(canape[k]).price}</p>
+                    <p>${totalLinePrice}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
                       <p>Qté : </p>
-                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${(canape[k]).quantity}">
+                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${canape[k].quantity}">
                     </div>
                     <div class="cart__item__content__settings__delete">
                       <button class="deleteItem">Supprimer</p>
@@ -74,7 +78,7 @@ for (let l = 0; l < deleteItem.length; l++)[
     event.preventDefault();
 
     //selection de l'id du produit qui va être supprimé en cliquant sur le bouton
-    console.log(event);
+    
     let idSelectionnerSuppression = canape[l].id;
     
 
@@ -84,7 +88,7 @@ for (let l = 0; l < deleteItem.length; l++)[
     //on envoie la variable dans le localStorage 
     //
     localStorage.setItem("canape",JSON.stringify(canape));
-    console.log(canape)
+    
     alert ("ce produit a été supprimé du panier");
      window.location.href= "cart.html";
      // callback(elementCourant[, index[, tableauEntier]])
@@ -95,23 +99,30 @@ for (let l = 0; l < deleteItem.length; l++)[
 ]
 //******************************************************************** montant total du panier ************************************************************************//
 //Declaration de la variable pour y mettre les prix dans le panier. 
+
 let prixTotalCalcul = [];
+
 //aller chercher les prix dans le panier 
 
 for (let m = 0;m<canape.length; m++){
-  let prixTotPanier = canape[m].price;
+  let prixTotPanier = (canape[m].quantity) * (canape[m].price);
   //mettre les prix du panier dans la variable "prixTotPanier"
   prixTotalCalcul.push(prixTotPanier);
 }
 //addition des prix qu'il y a dans le tableau de la variable "prixTotCalcul" avec la méthode .reduce.
+
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
 const prixTotal = prixTotalCalcul.reduce(reducer,0);
 // le code html du prix total à afficher
 prixTot=document.getElementById("totalPrice");
 prixTot.innerHTML = `${prixTotal}`;
+
 //******************************************************************** quantité totale du panier ************************************************************************//
 // gestion total quantité produits commandés. 
+
 let qteTotaleCalcul = [];
+
+
 for (let n = 0;n<canape.length; n++){
   let qteTotalePanier = (canape[n].quantity);
   qteTotaleCalcul.push(qteTotalePanier);
@@ -121,15 +132,74 @@ for (let n = 0;n<canape.length; n++){
 
 var total = qteTotaleCalcul.reduce((a, b)=> a + b,0);
 
-console.log(qteTotaleCalcul)
+
 qteTot = document.getElementById("totalQuantity");
 qteTot.innerHTML = `${total}`;
 
+//***********************************************************************Gestion changement de la quantité dans le panier ****************************************/
+
+//  let newValue = [];
+// var input = document.getElementsByTagName("input").itemQuantity;
+// console.log(input);
+// for (let q=0;q<canape.length;q++){
+// input.addEventListener('change',function(){
+//      parseInt(input.value)=(canape[q].quantity);
+//      let idSelectionnerSuppression = canape[q].id;
+//     canape = canape.filter(product => product.id !== idSelectionnerSuppression);
+//      //on envoie la variable dans le localStorage 
+//      localStorage.setItem("canape",JSON.stringify(canape));
+//      alert ("ce produit a été supprimé du panier");
+//      console.log(canape[q].id)
+
+//   })
+// }
+
+let changeItem = Array.from(document.querySelectorAll(".itemQuantity"));
+
+for (let l = 0; l < changeItem.length; l++)[
+  changeItem[l].addEventListener("change", () => {
+    console.log(canape[l].id);
+    canape[l].quantity=parseInt(changeItem[l].value);
+    console.log(changeItem[l].value);
+    localStorage.setItem("canape",JSON.stringify(canape));
+    window.location.href="cart.html";
+
+
+  })
+]
+  
+
+
+
+  // localStorage.setItem("newQty", newQuantity);
+  // newValue.push(newQuantity);
+  // var storedValue = localStorage.getItem("newQty");
+  // console.log(newValue); 
 
 
 
 
-//**************************************************Modification de la quantité dans le panier ****************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -242,15 +312,27 @@ qteTot.innerHTML = `${total}`;
                 let orderBtn = document.querySelector("#order");
                 orderBtn.addEventListener("click",(event) => { 
                 event.preventDefault();
-                
+                let contact = {
+                  firstName: document.getElementById("firstName").value,
+                  lastName: document.getElementById("lastName").value,
+                  address: document.getElementById("address").value,
+                  city: document.getElementById("city").value,
+                  email: document.getElementById("email").value,
+              };
+              if (
+                (contact.email !== null) &
+                (contact.firstName !== null) &
+                (contact.lastName !== null) &
+                (contact.city !== null) &
+                (contact.address !== null)   
+            ){
                
-                if(contact) {
                 let orderId = "6543134344468467"; 
                 let order = [canape, contact, orderId];
                 localStorage.setItem("order",JSON.stringify(order));
                 window.location.href = "./confirmation.html"; 
                 }else{
-                  alert("Erreur dans le formulaire de contact");
+                  alert("Oups il manque quelque chose");
                 }
               })
               
