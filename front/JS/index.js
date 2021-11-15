@@ -1,3 +1,4 @@
+// définition de l'adresse de l'API pour l'affichage de tous les produits. 
 const url="http://localhost:3000/api/products"
 const productlist=
 fetch(url)
@@ -22,8 +23,11 @@ fetch(url)
    
     //page d'accueil fonction pour l'affichage des produits//
     function addCards(data) {
+        //création de la boucle pour l'affichage des produits 
         for (product of data) {
+            // récupération dans le DOM du html correspondant à la carte d'un produit 
             const items = document.getElementById("items")
+            //incrémentation des informations du produit dans le html
             items.innerHTML += `   
             <a href="./product.html?id=${product._id}">
             <article>

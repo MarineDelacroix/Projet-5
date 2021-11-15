@@ -312,19 +312,12 @@ for (let l = 0; l < changeItem.length; l++)[
                 let orderBtn = document.querySelector("#order");
                 orderBtn.addEventListener("click",(event) => { 
                 event.preventDefault();
-                let contact = {
-                  firstName: document.getElementById("firstName").value,
-                  lastName: document.getElementById("lastName").value,
-                  address: document.getElementById("address").value,
-                  city: document.getElementById("city").value,
-                  email: document.getElementById("email").value,
-              };
               if (
-                (contact.email !== null) &
-                (contact.firstName !== null) &
-                (contact.lastName !== null) &
-                (contact.city !== null) &
-                (contact.address !== null)   
+                (contact[0] !== undefined) &
+                (contact[1] !== undefined) &
+                (contact[2] !== undefined) &
+                (contact[3] !== undefined) &
+                (contact[4] !== undefined)   
             ){
                
                 let orderId = "6543134344468467"; 
@@ -339,23 +332,12 @@ for (let l = 0; l < changeItem.length; l++)[
             
             
               
-            //}
-                //     localStorage.setItem("canape",JSON.stringify(canape));
-                //     localStorage.setItem("orderId", "65431343444684674");
-                //     window.location.href = "./confirmation.html"
-                //   })
-                // }
+           
               
                 
                 
                       
-                //Créer objet contact 
-
-                //const order = document.getElementById('order');
-                //Créer objet contact
-                //définir l'action
-                //order.addEventListener('click',contact);
-                //order.innerElement += '<input type="submit" onclick="${contact}" action="" value="Commander !" id="order">'
+                
                 
                       
   

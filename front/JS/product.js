@@ -1,4 +1,4 @@
-
+// déifnition de la classe product. 
 class product {
     constructor(id,name,altTxt,imageUrl,description,colors,price,quantity) {
         this.id= id;
@@ -12,38 +12,45 @@ class product {
     }
 }
 
-
+// recherche de l'id du produit cliqué via URLSearchParams. 
 const searchParams = new URLSearchParams(location.search);
-const newId = searchParams.get("id") 
+const newId = searchParams.get("id");
+
+// conception de l'objet Cartlocal
 const cartlocal = JSON.parse(localStorage.getItem("canape")) || [];
 
-//modification de l'adresse d'appel à l'API
+//modification de l'adresse d'appel à l'API et ajout de l'id du produit. 
 const newUrl = `http://localhost:3000/api/products/${newId}`;
 
 fetch(newUrl)
     .then((response) => response.json())
     .then((data) => {
         page_url(data);
-        // fonction pour la création de la card de la page produit
+        // fonction pour la création de la page produit
         console.log("data",data);
         function page_url() {      
 
-            // insertion des information de la card du produit
+        // insertion des informations du produit dans la page html. 
+
+        // ajout image du produit et du texte alternatif 
 
         const item__img = document.getElementsByClassName("item__img");
         item__img[0].innerHTML += `
         <img src="${data.imageUrl}" alt="${data.altTxt}">
         `;
-        
+        // ajout nom du produit 
         const title = document.getElementById("title")
             title.innerHTML = `${data.name}`
             ;
+        // ajout du prix du produit 
         const price = document.getElementById("price")
         price.innerText = `${data.price}` 
         ;
+        //ajout de la description du produit 
         const description = document.getElementById("description")
         description.innerText = data.description
         ;
+        //définition des choix possibles pour les couleurs du produit 
         const colors = document.getElementById("colors")
         ;   
         colors.innerHTML += `
@@ -58,12 +65,11 @@ fetch(newUrl)
         if ((data.colors).length === 4){
         colors.innerHTML +=`
         <option value="${data.colors[3]}">${data.colors[3]}</option>`;
+        }  
         }
-        
-            
-        
-          
-        }
+
+
+    // fonction pour l'ajout du produit au panier au clic sur le bouton correspondant. 
         function button(){
         const addToCart = document.getElementById("addToCart")
         addToCart.addEventListener("click", itemQuantity)
@@ -78,40 +84,18 @@ fetch(newUrl)
             quantityValue.innerElement+= `
             <input type="number" name="itemQuantity" min="1" max="100" value="${$0.input}" id="quantity">`;
         }
-/*             var inputQty = document.getElementById("quantity").value;
-            const title = document.getElementById("title")
-            title.innerHTML = `${data.name}`
-            ;
-            var inputColor=document.getElementById("colors").option;
-            let names = [data.name];
-            localStorage.setItem("names", JSON.stringify(names));
+    
 
-            let product = [newId,(data.colors),inputQty];
-            localStorage.setItem("product", JSON.stringify (product));
-            
-
-            let description = [data.description];
-            localStorage.setItem("description", JSON.stringify(description));
-            
-            let imageUrl = [data.imageUrl,data.altTxt];
-            localStorage.setItem("imageUrl", JSON.stringify(imageUrl));
-            let price = [data.price];
-
-            localStorage.setItem("price",JSON.stringify(price));
-           //let arr =[newId,data.name,data.altTxt,data.imageUrl,data.description,inputQty,data.price];
-           //localStorage.setItem("order", JSON.stringify(arr));   
-           
-          
-               
-           } */
+//***********************************************/ Au clic sur le bouton commander *****************************************************************
         
            const btnAddBasket = document.getElementById("addToCart");
            btnAddBasket.addEventListener("click", (e) => {
                e.preventDefault();
+               //récupération de la couleur choisie
                const list = document.getElementById("colors");
+               //récupération de la quantité choisie 
                const quantity = document.getElementById("quantity");
-   
-               // créer un nouveau produit
+               // création de l'objet nouveau produit d'après les infos sélectionnées. 
                let objectProduct = new product(
                    newId,
                    data.name,
@@ -124,6 +108,7 @@ fetch(newUrl)
                );
                let isAlreadyPresent = false;
             let indexModification;
+            //création boucle pour filtrage des produits du panier
             for (products of cartlocal) {
                  switch (products.id) {
                      case objectProduct.id:
@@ -133,30 +118,18 @@ fetch(newUrl)
                 console.log(products)
             }
 
-            // si déjaPresent incrémente seulement la quantité
+            
             if (isAlreadyPresent) {
+                // si l'id du produit est déjà présent, on incrémente seulement la quantité.
                 cartlocal[indexModification].quantity =
                     +cartlocal[indexModification].quantity + +objectProduct.quantity;
-                    
                 localStorage.setItem("canape", JSON.stringify(cartlocal));
-                // si non, ajoute le produit au localStorage
             } else {
+                // si non, ajoute la totalité du produit (objectProduct) au localStorage.
                 cartlocal.push(objectProduct);
                 localStorage.setItem("canape", JSON.stringify(cartlocal));
             }
-
-            //    console.log("object",objectProduct);
-            //     cartlocal.push(objectProduct);
-            //     localStorage.setItem("canape", JSON.stringify(cartlocal));
-            //     alert("Produit ajouté au panier");
         
            });
-    
-        
-
-     
-
-    
-
 
 });  
