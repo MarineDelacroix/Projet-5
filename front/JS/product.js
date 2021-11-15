@@ -90,6 +90,7 @@ fetch(newUrl)
         
            const btnAddBasket = document.getElementById("addToCart");
            btnAddBasket.addEventListener("click", (e) => {
+               
                e.preventDefault();
                //récupération de la couleur choisie
                const list = document.getElementById("colors");
@@ -106,6 +107,7 @@ fetch(newUrl)
                     data.price,
                     parseInt(quantity.value, 10)
                );
+            
                let isAlreadyPresent = false;
             let indexModification;
             //création boucle pour filtrage des produits du panier
@@ -117,19 +119,23 @@ fetch(newUrl)
                 }
                 console.log(products)
             }
-
-            
+            if((objectProduct.colors !== undefined) &
+            (objectProduct.quantity !== 0)){
             if (isAlreadyPresent) {
                 // si l'id du produit est déjà présent, on incrémente seulement la quantité.
                 cartlocal[indexModification].quantity =
                     +cartlocal[indexModification].quantity + +objectProduct.quantity;
                 localStorage.setItem("canape", JSON.stringify(cartlocal));
+                alert("Le produit a été ajouté au panier !");
             } else {
                 // si non, ajoute la totalité du produit (objectProduct) au localStorage.
                 cartlocal.push(objectProduct);
                 localStorage.setItem("canape", JSON.stringify(cartlocal));
+                alert("Le produit a été ajouté au panier !");
             }
         
-           });
+        }else{
+            alert("Vous n'avez pas sélectionné de couleur ou de quantité pour ce produit !");
+        }});
 
 });  

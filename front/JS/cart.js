@@ -328,8 +328,6 @@ for (let l = 0; l < changeItem.length; l++)[
                   alert("Oups il manque quelque chose");
                 }
               })
-              
-            
             
               
            
