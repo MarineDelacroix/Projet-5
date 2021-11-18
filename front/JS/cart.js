@@ -218,7 +218,7 @@ for (let l = 0; l < changeItem.length; l++)[
                   let firstNameErrorMsg = inputFirstName.nextElementSibling;
                   if (testFirstName === true){                    
                     firstNameErrorMsg.innerHTML = "Prénom Valide";
-                    contact.push(inputFirstName.value);
+                    newContact.push(inputFirstName.value);
                     return true;
                   }
                   else{
@@ -238,7 +238,7 @@ for (let l = 0; l < changeItem.length; l++)[
                   let lastNameErrorMsg = inputLastName.nextElementSibling;
                   if (testLastName === true){
                     lastNameErrorMsg.innerHTML='Nom Valide';  
-                    contact.push(inputLastName.value);                    
+                    newContact.push(inputLastName.value);                    
                     return true;
                   }
                   else{
@@ -258,7 +258,7 @@ for (let l = 0; l < changeItem.length; l++)[
                   let addressErrorMsg = inputAddress.nextElementSibling;
                   if (testAddress){
                     addressErrorMsg.innerHTML='Adresse Valide';
-                    contact.push(inputAddress.value);
+                    newContact.push(inputAddress.value);
                     
                     return true;                    
                   }
@@ -279,7 +279,7 @@ for (let l = 0; l < changeItem.length; l++)[
                   let cityErrorMsg = inputCity.nextElementSibling;
                   if (testCity){
                     cityErrorMsg.innerHTML='Ville Valide';
-                    contact.push(inputCity.value);                    
+                    newContact.push(inputCity.value);                    
                     return true;
                   }
                   else{
@@ -299,7 +299,7 @@ for (let l = 0; l < changeItem.length; l++)[
                   let emailErrorMsg = inputEmail.nextElementSibling;
                   if (testEmail === true){
                     emailErrorMsg.innerHTML='Email Valide';
-                    contact.push(inputEmail.value);                    
+                    newContact.push(inputEmail.value);                    
                     return true;                     
                   }
                   else{
@@ -307,61 +307,78 @@ for (let l = 0; l < changeItem.length; l++)[
                   }
                 }
                 //***********************************************************Creation de l'objet contact******************************************//
-                let contact = []
-                console.log(contact);  
+                let newContact = []
+                console.log(newContact);  
                 let orderBtn = document.querySelector("#order");
                 orderBtn.addEventListener("click",(event) => { 
                 event.preventDefault();
               if (
-                (contact[0] !== undefined) &
-                (contact[1] !== undefined) &
-                (contact[2] !== undefined) &
-                (contact[3] !== undefined) &
-                (contact[4] !== undefined)   
+                (newContact[0] !== undefined) &
+                (newContact[1] !== undefined) &
+                (newContact[2] !== undefined) &
+                (newContact[3] !== undefined) &
+                (newContact[4] !== undefined)   
             ){
-               
-                let orderId = "6543134344468467"; 
-                let order = [canape, contact, orderId];
-                localStorage.setItem("order",JSON.stringify(order));
-                window.location.href = "./confirmation.html"; 
+              /* let orderId = "6543134344468467";
+              const newUrl= `http://localhost:3000/api/products/order/${orderId}`;
+                fetch(`http://localhost:3000/api/products/order`, {
+                method: "POST",
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                  let orderId = "6543134344468467"; 
+                  let order = [canape, contact, orderId];
+                  localStorage.setItem("order",JSON.stringify(order));
+                  // window.location.href = "./confirmation.html";
+                }) */
+                const contact = { 
+                  firstName:newContact[0],
+                  lastName:newContact[1],
+                  address:newContact[2],
+                  city:newContact[3],
+                  email:newContact[4]
+                };
+                
+                let products = [];
+            for (product of canape) {
+                products.push(product.id);
+            }
+                console.log(products);
+                console.log(contact);
+                const promise01 = fetch(`http://localhost:3000/api/products/order`, {
+                  method:"POST",
+                  body: JSON.stringify({contact,products}),
+                  headers: {
+                    "Content-Type":"application/json",
+                    
+                  },
+                  
+                });
+                console.log(promise01);
+                promise01.then( async (data) => {
+                  try{
+                    const contenu = await data.json();
+                    console.log(contenu);
+                    orderId = contenu.orderId;
+                    
+                    const order = {
+                      contact: contenu.contact,
+                      products: contenu.products,
+                      orderId: contenu.orderId
+                    }
+                    console.log(order.products);
+                    localStorage.setItem("order",JSON.stringify(order));
+                    localStorage.setItem("orderId",JSON.stringify(orderId));
+                    window.location.href = `./confirmation.html`;
+                    
+                  }catch (e){
+                    console.log(e);
+                  }
+                });
+                
                 }else{
-                  alert("Oups il manque quelque chose");
-                }
-              })
-            
-              
-           
-              
-                
-                
-                      
-                
-                
-                      
+          alert("Oups il manque quelque chose");   
+        }
   
-
-
-              
-
-              
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
        
-              
+      })
