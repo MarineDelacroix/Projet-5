@@ -187,7 +187,7 @@ for (let l = 0; l < changeItem.length; l++)[
                   )
                   let testCity = cityRegExp.test(inputCity.value);
                   let cityErrorMsg = inputCity.nextElementSibling;
-                  if (testCity){
+                  if (testCity === true){
                     //si la valeur est valide => notifier à l'utilisateur + envoyer les données à la variable newContact
                     cityErrorMsg.innerHTML='Ville Valide';
                     newContact.push(inputCity.value);                    
@@ -221,7 +221,7 @@ for (let l = 0; l < changeItem.length; l++)[
                   }
                 }
 //***********************************************************Creation de la variable newContact******************************************//
-                let newContact = []
+                let newContact = [];
                 console.log(newContact);  
                 // selection du bouton "commander" dans le DOM
                 let orderBtn = document.querySelector("#order");
@@ -239,11 +239,11 @@ for (let l = 0; l < changeItem.length; l++)[
             ){
               // création de l'objet contact à partir de la variable newContact
                 const contact = { 
-                  firstName:newContact[0],
-                  lastName:newContact[1],
-                  address:newContact[2],
-                  city:newContact[3],
-                  email:newContact[4]
+                  firstName:document.getElementById("firstName").value,
+                  lastName:document.getElementById("lastName").value,
+                  address:document.getElementById("address").value,
+                  city:document.getElementById("city").value,
+                  email:document.getElementById("email").value
                 };
               // création de la variable contenant les id des produits commandés
                 let products = [];
