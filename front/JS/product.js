@@ -1,4 +1,4 @@
-// déifnition de la classe product. 
+// redéfinition de la classe product. 
 class product {
     constructor(id,name,altTxt,imageUrl,description,colors,price,quantity) {
         this.id= id;
@@ -16,24 +16,22 @@ class product {
 const searchParams = new URLSearchParams(location.search);
 const newId = searchParams.get("id");
 
-// conception de l'objet Cartlocal
+// conception de la constante cartlocal
 const cartlocal = JSON.parse(localStorage.getItem("canape")) || [];
 
-//modification de l'adresse d'appel à l'API et ajout de l'id du produit. 
+//modification de l'adresse d'appel à l'API et ajout de l'id du produit dans cette dernière
 const newUrl = `http://localhost:3000/api/products/${newId}`;
-
+// fetch sur la nouvelle URL pour récupérer les infos du bon produit (selon id)
 fetch(newUrl)
     .then((response) => response.json())
     .then((data) => {
         page_url(data);
         // fonction pour la création de la page produit
         console.log("data",data);
+        //création de la fonction page_url contenant les modifications effectuées dans le DOM pour l'affichage des infosdu produit cliqué
         function page_url() {      
-
         // insertion des informations du produit dans la page html. 
-
         // ajout image du produit et du texte alternatif 
-
         const item__img = document.getElementsByClassName("item__img");
         item__img[0].innerHTML += `
         <img src="${data.imageUrl}" alt="${data.altTxt}">
@@ -50,18 +48,21 @@ fetch(newUrl)
         const description = document.getElementById("description")
         description.innerText = data.description
         ;
-        //définition des choix possibles pour les couleurs du produit 
+        //définition des choix possibles pour les couleurs du produit afin d'éviter les valeurs null ou undefined dans la liste 
         const colors = document.getElementById("colors")
         ;   
+        // si 2 couleurs
         colors.innerHTML += `
         <option value="${data.colors[0]}">${data.colors[0]}</option>
         <option value="${data.colors[1]}">${data.colors[1]}</option>
         `;
+        // si il y a trois couleurs possibles
         if ((data.colors).length === 3){
         colors.innerHTML += `      
         <option value="${data.colors[2]}">${data.colors[2]}</option>
         `;
         }
+        // si il y a 4 couleurs possibles
         if ((data.colors).length === 4){
         colors.innerHTML +=`
         <option value="${data.colors[3]}">${data.colors[3]}</option>`;
@@ -86,11 +87,11 @@ fetch(newUrl)
         }
     
 
-//***********************************************/ Au clic sur le bouton commander *****************************************************************
+//***********************************************/ Au clic sur le bouton "Ajouter au panier" *****************************************************************
         
            const btnAddBasket = document.getElementById("addToCart");
            btnAddBasket.addEventListener("click", (e) => {
-               
+               // prévention sur le comportement par défaut du bouton par exemple rechargement de la page
                e.preventDefault();
                //récupération de la couleur choisie
                const list = document.getElementById("colors");
@@ -107,34 +108,44 @@ fetch(newUrl)
                     data.price,
                     parseInt(quantity.value, 10)
                );
-            
-               let isAlreadyPresent = false;
+            // déclaration de la variable pour vérifier la présence d'un produit dans le localStorage
+            let isAlreadyPresent = false;
+            // déclaration de la variable pour vérification de tous les produits
             let indexModification;
             //création boucle pour filtrage des produits du panier
             for (products of cartlocal) {
                  switch (products.id) {
+                     // vérification si un produit est déjà présent par son id
                      case objectProduct.id:
                         isAlreadyPresent = true;
-                         indexModification = cartlocal.indexOf(products);
+                        indexModification = cartlocal.indexOf(products);
                 }
                 console.log(products)
             }
+            // si l'utilisateur a bien fait un choix de couleur et que la quantité du produit est supérieure à zéro
             if((objectProduct.colors !== undefined) &
             (objectProduct.quantity !== 0)){
             if (isAlreadyPresent) {
                 // si l'id du produit est déjà présent, on incrémente seulement la quantité.
                 cartlocal[indexModification].quantity =
                     +cartlocal[indexModification].quantity + +objectProduct.quantity;
+                    // on ajoute la quantité au produit correspondant et on envoi les données au localStorage
                 localStorage.setItem("canape", JSON.stringify(cartlocal));
+                // on prévient l'utilisateur que le produit a bien été ajouté au panier
                 alert("Le produit a été ajouté au panier !");
             } else {
                 // si non, ajoute la totalité du produit (objectProduct) au localStorage.
                 cartlocal.push(objectProduct);
+                // envoi de l'intégralité des données du produit au localStorage
                 localStorage.setItem("canape", JSON.stringify(cartlocal));
+                // on prévient l'utilisateur que le produit a bien été ajouté au panier. 
                 alert("Le produit a été ajouté au panier !");
             }
         
         }else{
+            // si l'utilisateur n'a pas fait de choix de couleur ou de quantité pour le produit, 
+            // une alerte apparait pour prévenir l'utilisateur, 
+            // les données ne sont pas envoyées. 
             alert("Vous n'avez pas sélectionné de couleur ou de quantité pour ce produit !");
         }});
 
