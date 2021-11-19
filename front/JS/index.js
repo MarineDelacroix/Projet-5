@@ -1,6 +1,7 @@
 // définition de l'adresse de l'API pour l'affichage de tous les produits. 
 const url="http://localhost:3000/api/products"
 const productlist=
+// fetch pour récupérer les données de l'API 
 fetch(url)
     .then((response) => response.json())
     .then((data) => {
@@ -8,7 +9,7 @@ fetch(url)
     })
     .catch((erreur) => console.log("erreur : " + erreur));
 
-    //définition de la classe product pour affichage des produits//
+//définition de la classe product pour affichage des produits//
     class product {
         constructor(id,name,altTxt,imageUrl,description,colors,price) {
             this.id= id;
@@ -21,13 +22,13 @@ fetch(url)
         }
     }
    
-    //page d'accueil fonction pour l'affichage des produits//
+//page d'accueil fonction pour l'affichage des produits
     function addCards(data) {
-        //création de la boucle pour l'affichage des produits 
+//création de la boucle pour l'affichage des produits 
         for (product of data) {
-            // récupération dans le DOM du html correspondant à la carte d'un produit 
+// récupération dans le DOM du html correspondant à la carte d'un produit 
             const items = document.getElementById("items")
-            //incrémentation des informations du produit dans le html
+//incrémentation des informations du produit dans le html (carte du produit) grâce à la classe product
             items.innerHTML += `   
             <a href="./product.html?id=${product._id}">
             <article>
