@@ -114,9 +114,9 @@ fetch(newUrl)
             let indexModification;
             //création boucle pour filtrage des produits du panier
             for (products of cartlocal) {
-                 switch (products.id) {
+                 switch (products.id && products.colors) {
                      // vérification si un produit est déjà présent par son id
-                     case objectProduct.id:
+                     case objectProduct.id && objectProduct.colors:
                         isAlreadyPresent = true;
                         indexModification = cartlocal.indexOf(products);
                 }

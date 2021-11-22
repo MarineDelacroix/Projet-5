@@ -17,7 +17,7 @@
 //********************************************************************Si le panier n'est pas vide************************************************/    
     else{     
       for(k = 0; k < canape.length; k++){       
-          const totalLinePrice = (canape[k].quantity) * (canape[k].price);       
+          const totalLinePrice = (canape[k].quantity) * (canape[k].price);   
         structureProduitPanier = 
         structureProduitPanier + 
         `
@@ -29,6 +29,7 @@
                   <div class="cart__item__content__titlePrice">
                     <h2>${(canape[k]).name}</h2>
                     <p>${totalLinePrice}</p>
+                    <p>${canape[k].colors}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -58,9 +59,9 @@ for (let l = 0; l < deleteItem.length; l++)[
   deleteItem[l].addEventListener("click", (event) => {
     event.preventDefault();
     //selection de l'id du produit qui va être supprimé en cliquant sur le bouton
-    let idSelectionnerSuppression = canape[l].id;
+    let idSelectionnerSuppression = canape[l].id && canape[l].colors;
     //utilisation de la methode filter permettant de choisir les éléments à garder et ceux à supprimer.
-    canape = canape.filter(product => product.id !== idSelectionnerSuppression);
+    canape = canape.filter(product => product.id && product.colors !== idSelectionnerSuppression);
     //on envoie la variable dans le localStorage 
     //
     localStorage.setItem("canape",JSON.stringify(canape));

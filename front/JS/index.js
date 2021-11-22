@@ -1,6 +1,6 @@
 // définition de l'adresse de l'API pour l'affichage de tous les produits. 
 const url="http://localhost:3000/api/products"
-const productlist=
+
 // fetch pour récupérer les données de l'API 
 fetch(url)
     .then((response) => response.json())
@@ -9,7 +9,7 @@ fetch(url)
     })
     .catch((erreur) => console.log("erreur : " + erreur));
 
-//définition de la classe product pour affichage des produits//
+    //définition de la classe product pour affichage des produits//
     class product {
         constructor(id,name,altTxt,imageUrl,description,colors,price) {
             this.id= id;
