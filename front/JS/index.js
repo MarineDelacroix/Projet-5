@@ -23,20 +23,20 @@ fetch(url)
     }
    
 //page d'accueil fonction pour l'affichage des produits
-    function addCards(data) {
-//création de la boucle pour l'affichage des produits 
-        for (product of data) {
-// récupération dans le DOM du html correspondant à la carte d'un produit 
-            const items = document.getElementById("items")
-//incrémentation des informations du produit dans le html (carte du produit) grâce à la classe product
-            items.innerHTML += `   
-            <a href="./product.html?id=${product._id}">
-            <article>
-              <img src="${product.imageUrl}" alt="${product.altTxt}">
-              <h3 class="product.name">${product.name}</h3>
-              <p class="productDescription">${product.description}</p>
-            </article>
-          </a>`
-        }
-    }
+function addCards(data) {
+  //création de la boucle pour l'affichage des produits 
+  for (product of data) {
+    // récupération dans le DOM du html correspondant à la carte d'un produit 
+    const items = document.getElementById("items")
+      //incrémentation des informations du produit dans le html (carte du produit) grâce à la classe product
+      items.innerHTML += `   
+      <a href="./product.html?id=${product._id}">
+      <article>
+        <img src="${product.imageUrl}" alt="${product.altTxt}">
+        <h3 class="product.name">${product.name}</h3>
+          <p class="productDescription">${product.description}</p>
+      </article>
+      </a>`
+  }
+}
 
